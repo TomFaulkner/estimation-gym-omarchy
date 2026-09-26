@@ -1,5 +1,18 @@
 # Estimation Gym
 
+> **A player-maintained fork.** This is a fork of
+> [SidathPeiris/estimation-gym-omarchy](https://github.com/SidathPeiris/estimation-gym-omarchy),
+> which is archived and finished. I am not the original author — just a
+> user/player keeping a copy alive for small improvements.
+>
+> **PRs and issues are welcome here.** Divergences from upstream are
+> intentional and documented below.
+>
+> Fork differences so far:
+> - Optional `iconOnly` bar chip mode (`omarchy bar set
+>   sidath.estimation-gym iconOnly true --json`) — icon only, no band/streak
+>   label. Defaults to off.
+
 > **This plugin is finished.** It does what it set out to do, and the version
 > here is the final one — no further changes are planned.
 >
@@ -30,7 +43,7 @@ anything.
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/SidathPeiris/estimation-gym-omarchy.git --enable
+omarchy plugin add https://github.com/TomFaulkner/estimation-gym-omarchy.git --enable
 omarchy restart shell
 ```
 
@@ -147,4 +160,4 @@ your users get the source too.
 
 ---
 
-*Got a good question for the bank? [Suggest one](https://github.com/SidathPeiris/estimation-gym-omarchy/issues/new?template=suggest-a-question.yml).*
+*Got a good question for the bank? [Suggest one](https://github.com/TomFaulkner/estimation-gym-omarchy/issues/new).*
