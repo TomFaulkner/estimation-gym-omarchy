@@ -51,6 +51,27 @@ Panel {
   readonly property var stats: Model.computeStats(stateData)
   readonly property string statePath: Quickshell.env("HOME") + "/.local/state/estimation-gym/state.json"
 
+  // Display mode: when true the bar chip shows only the 🎯 icon, hiding the
+  // band / streak label (e.g. "Bullseye · x7"). Set via:
+  //   omarchy bar set sidath.estimation-gym iconOnly true --json
+  // Defaults to false to preserve the current behavior.
+  // NOTE: reads settings.* directly (instead of via setting()) so the
+  // binding has a direct dependency on the settings object.
+  readonly property bool iconOnly: {
+    var s = settings ? settings.iconOnly : undefined
+    if (s === true || s === 1) return true
+    if (typeof s === "string") return s.toLowerCase() === "true" || s === "1"
+    return false
+  }
+  readonly property string chipLabel: root.answeredToday
+    ? root.todayResult.band + (root.stateData.streak > 0 ? " · x" + root.stateData.streak : "")
+    : qsTr("Guess")
+
+  function chipTooltip() {
+    if (!root.iconOnly) return qsTr("Today's estimation puzzle")
+    return root.chipLabel + " — " + qsTr("Today's estimation puzzle")
+  }
+
   function loadState(raw) {
     try {
       var parsed = JSON.parse(raw)
@@ -171,9 +192,8 @@ Panel {
         // Never rich text: bank content is contributed, and none of this is markup.
 
         textFormat: Text.PlainText
-        text: root.answeredToday
-          ? root.todayResult.band + (root.stateData.streak > 0 ? " · x" + root.stateData.streak : "")
-          : qsTr("Guess")
+        visible: !root.iconOnly
+        text: root.chipLabel
         color: root.answeredToday ? root.bandColor(root.todayResult.band) : root.foreground
         font.family: root.fontFamily
         font.pixelSize: Style.font.bodySmall
@@ -186,7 +206,7 @@ Panel {
       anchors.fill: parent
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
-      onEntered: if (root.bar) root.bar.showTooltip(button, qsTr("Today's estimation puzzle"))
+      onEntered: if (root.bar) root.bar.showTooltip(button, root.chipTooltip())
       onExited: if (root.bar) root.bar.hideTooltip(button)
       onClicked: root.toggle()
     }

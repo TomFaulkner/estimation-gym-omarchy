@@ -42,6 +42,12 @@ locked, so unlock first.)
 
 - The bar chip shows 🎯 **Guess** until you have answered; afterwards it shows
   the band you scored and your current streak, e.g. 🎯 **Bullseye · x7**.
+- Prefer icon-only? Hide the label and streak count, keeping just 🎯 (the full
+  status moves into the hover tooltip):
+  ```bash
+  omarchy bar set sidath.estimation-gym iconOnly true --json
+  ```
+  Back to default with `iconOnly false --json`. Default is `false`.
 - Click the chip to open today's puzzle. Type a number and press Enter, or click
   **Go**. Scientific notation like `3e12` works for big numbers.
 - After answering you get your guess against the real value, how many orders of
